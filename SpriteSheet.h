@@ -26,6 +26,6 @@
 /* Bank of tiles. */
 #define SpriteSheetBank 0
 /* Start of tile array. */
-extern unsigned char SpriteSheet[];
+extern const unsigned char SpriteSheet[];
 
 /* End of SPRITESHEET.H */

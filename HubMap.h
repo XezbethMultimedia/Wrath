@@ -22,6 +22,6 @@
 #define HubMapHeight 18
 #define HubMapBank 0
 
-extern unsigned char HubMap[];
+extern const unsigned char HubMap[];
 
 /* End of HUBMAP.H */

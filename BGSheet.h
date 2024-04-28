@@ -26,6 +26,6 @@
 /* Bank of tiles. */
 #define BGSheetBank 0
 /* Start of tile array. */
-extern unsigned char BGSheet[];
+extern const unsigned char BGSheet[];
 
 /* End of BGSHEET.H */
