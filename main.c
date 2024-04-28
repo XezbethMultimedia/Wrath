@@ -1,9 +1,9 @@
 #include <gb/gb.h>
 #include <stdint.h>
 #include <stdbool.h>
-#include "BGSheet.h"
-#include "SpriteSheet.h"
-#include "HubMap.h"
+#include "BGSheet.c"
+#include "SpriteSheet.c"
+#include "HubMap.c"
 
 uint8_t playerLocation[2];
 uint8_t input;

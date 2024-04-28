@@ -7,16 +7,16 @@ Symbol Table
     .__.ABS.                                                    =  000000 G
     .__.CPU.                                                    =  000000 L
     .__.H$L.                                                    =  000000 L
-    _BGSheet                                                       ****** GX
-    _HubMap                                                        ****** GX
+  0 _BGSheet                                                       00000C GR
+  0 _HubMap                                                        00011C GR
     _LCDC_REG                                                      ****** GX
-    _SpriteSheet                                                   ****** GX
+  0 _SpriteSheet                                                   0000DC GR
   7 __xinit__loopRunning                                           000000 R
-  0 _getPlayerInput                                                00000C GR
+  0 _getPlayerInput                                                000284 GR
   1 _input                                                         000002 GR
     _joypad                                                        ****** GX
   2 _loopRunning                                                   000000 GR
-  0 _main                                                          00004A GR
+  0 _main                                                          0002C2 GR
   0 _performantDelay                                               000000 GR
   1 _playerLocation                                                000000 GR
     _set_bkg_data                                                  ****** GX
@@ -30,7 +30,7 @@ Hexadecimal [24-Bits]
 
 Area Table
 
-   0 _CODE                                      size     A0   flags    0
+   0 _CODE                                      size    318   flags    0
    1 _DATA                                      size      3   flags    0
    2 _INITIALIZED                               size      1   flags    0
    3 _DABS                                      size      0   flags    8
