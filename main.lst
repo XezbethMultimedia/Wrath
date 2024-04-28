@@ -1,0 +1,192 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ISO C Compiler 
+                                      3 ; Version 4.3.2 #14228 (MINGW64)
+                                      4 ;--------------------------------------------------------
+                                      5 	.module main
+                                      6 	.optsdcc -msm83
+                                      7 	
+                                      8 ;--------------------------------------------------------
+                                      9 ; Public variables in this module
+                                     10 ;--------------------------------------------------------
+                                     11 	.globl _main
+                                     12 	.globl _getPlayerInput
+                                     13 	.globl _performantDelay
+                                     14 	.globl _set_sprite_data
+                                     15 	.globl _set_bkg_tiles
+                                     16 	.globl _set_bkg_data
+                                     17 	.globl _wait_vbl_done
+                                     18 	.globl _joypad
+                                     19 	.globl _loopRunning
+                                     20 	.globl _input
+                                     21 	.globl _playerLocation
+                                     22 ;--------------------------------------------------------
+                                     23 ; special function registers
+                                     24 ;--------------------------------------------------------
+                                     25 ;--------------------------------------------------------
+                                     26 ; ram data
+                                     27 ;--------------------------------------------------------
+                                     28 	.area _DATA
+      000000                         29 _playerLocation::
+      000000                         30 	.ds 2
+      000002                         31 _input::
+      000002                         32 	.ds 1
+                                     33 ;--------------------------------------------------------
+                                     34 ; ram data
+                                     35 ;--------------------------------------------------------
+                                     36 	.area _INITIALIZED
+      000000                         37 _loopRunning::
+      000000                         38 	.ds 1
+                                     39 ;--------------------------------------------------------
+                                     40 ; absolute external ram data
+                                     41 ;--------------------------------------------------------
+                                     42 	.area _DABS (ABS)
+                                     43 ;--------------------------------------------------------
+                                     44 ; global & static initialisations
+                                     45 ;--------------------------------------------------------
+                                     46 	.area _HOME
+                                     47 	.area _GSINIT
+                                     48 	.area _GSFINAL
+                                     49 	.area _GSINIT
+                                     50 ;--------------------------------------------------------
+                                     51 ; Home
+                                     52 ;--------------------------------------------------------
+                                     53 	.area _HOME
+                                     54 	.area _HOME
+                                     55 ;--------------------------------------------------------
+                                     56 ; code
+                                     57 ;--------------------------------------------------------
+                                     58 	.area _CODE
+                                     59 ;main.c:13: void performantDelay(uint8_t delay){
+                                     60 ;	---------------------------------
+                                     61 ; Function performantDelay
+                                     62 ; ---------------------------------
+      000000                         63 _performantDelay::
+      000000 4F               [ 4]   64 	ld	c, a
+                                     65 ;main.c:15: for(i = 0; i < delay; i++){
+      000001 06 00            [ 8]   66 	ld	b, #0x00
+      000003                         67 00103$:
+      000003 78               [ 4]   68 	ld	a, b
+      000004 91               [ 4]   69 	sub	a, c
+      000005 D0               [20]   70 	ret	NC
+                                     71 ;main.c:16: wait_vbl_done();
+      000006 CDr00r00         [24]   72 	call	_wait_vbl_done
+                                     73 ;main.c:15: for(i = 0; i < delay; i++){
+      000009 04               [ 4]   74 	inc	b
+                                     75 ;main.c:18: }
+      00000A 18 F7            [12]   76 	jr	00103$
+                                     77 ;main.c:20: void getPlayerInput(void){
+                                     78 ;	---------------------------------
+                                     79 ; Function getPlayerInput
+                                     80 ; ---------------------------------
+      00000C                         81 _getPlayerInput::
+                                     82 ;main.c:21: input = joypad();
+      00000C CDr00r00         [24]   83 	call	_joypad
+      00000F 21r02r00         [12]   84 	ld	hl, #_input
+                                     85 ;main.c:23: if(input & J_LEFT){
+      000012 77               [ 8]   86 	ld	(hl), a
+      000013 CB 4F            [ 8]   87 	bit	1, a
+      000015 28 09            [12]   88 	jr	Z, 00110$
+                                     89 ;main.c:24: playerLocation[0] -= 8;
+      000017 01r00r00         [12]   90 	ld	bc, #_playerLocation+0
+      00001A 0A               [ 8]   91 	ld	a, (bc)
+      00001B C6 F8            [ 8]   92 	add	a, #0xf8
+      00001D 02               [ 8]   93 	ld	(bc), a
+      00001E 18 25            [12]   94 	jr	00111$
+      000020                         95 00110$:
+                                     96 ;main.c:26: else if(input & J_UP){
+      000020 CB 57            [ 8]   97 	bit	2, a
+      000022 28 09            [12]   98 	jr	Z, 00107$
+                                     99 ;main.c:27: playerLocation[1] -= 8;
+      000024 01r01r00         [12]  100 	ld	bc, #_playerLocation+1
+      000027 0A               [ 8]  101 	ld	a, (bc)
+      000028 C6 F8            [ 8]  102 	add	a, #0xf8
+      00002A 02               [ 8]  103 	ld	(bc), a
+      00002B 18 18            [12]  104 	jr	00111$
+      00002D                        105 00107$:
+                                    106 ;main.c:29: else if(input & J_RIGHT){
+      00002D CB 47            [ 8]  107 	bit	0, a
+      00002F 28 09            [12]  108 	jr	Z, 00104$
+                                    109 ;main.c:30: playerLocation[0] += 8;
+      000031 01r00r00         [12]  110 	ld	bc, #_playerLocation+0
+      000034 0A               [ 8]  111 	ld	a, (bc)
+      000035 C6 08            [ 8]  112 	add	a, #0x08
+      000037 02               [ 8]  113 	ld	(bc), a
+      000038 18 0B            [12]  114 	jr	00111$
+      00003A                        115 00104$:
+                                    116 ;main.c:32: else if(input & J_DOWN){
+      00003A CB 5F            [ 8]  117 	bit	3, a
+      00003C 28 07            [12]  118 	jr	Z, 00111$
+                                    119 ;main.c:33: playerLocation[1] += 8;
+      00003E 01r01r00         [12]  120 	ld	bc, #_playerLocation+1
+      000041 0A               [ 8]  121 	ld	a, (bc)
+      000042 C6 08            [ 8]  122 	add	a, #0x08
+      000044 02               [ 8]  123 	ld	(bc), a
+      000045                        124 00111$:
+                                    125 ;main.c:36: performantDelay(3);
+      000045 3E 03            [ 8]  126 	ld	a, #0x03
+                                    127 ;main.c:37: }
+      000047 C3r00r00         [16]  128 	jp	_performantDelay
+                                    129 ;main.c:39: void main(void){
+                                    130 ;	---------------------------------
+                                    131 ; Function main
+                                    132 ; ---------------------------------
+      00004A                        133 _main::
+                                    134 ;main.c:41: set_bkg_data(0, 16, BGSheet);
+      00004A 11r00r00         [12]  135 	ld	de, #_BGSheet
+      00004D D5               [16]  136 	push	de
+      00004E 21 00 10         [12]  137 	ld	hl, #0x1000
+      000051 E5               [16]  138 	push	hl
+      000052 CDr00r00         [24]  139 	call	_set_bkg_data
+      000055 E8 04            [16]  140 	add	sp, #4
+                                    141 ;main.c:42: set_bkg_tiles(0, 0, 20, 18, HubMap);
+      000057 11r00r00         [12]  142 	ld	de, #_HubMap
+      00005A D5               [16]  143 	push	de
+      00005B 21 14 12         [12]  144 	ld	hl, #0x1214
+      00005E E5               [16]  145 	push	hl
+      00005F AF               [ 4]  146 	xor	a, a
+      000060 0F               [ 4]  147 	rrca
+      000061 F5               [16]  148 	push	af
+      000062 CDr00r00         [24]  149 	call	_set_bkg_tiles
+      000065 E8 06            [16]  150 	add	sp, #6
+                                    151 ;main.c:44: set_sprite_data(0, 3, SpriteSheet);
+      000067 11r00r00         [12]  152 	ld	de, #_SpriteSheet
+      00006A D5               [16]  153 	push	de
+      00006B 21 00 03         [12]  154 	ld	hl, #0x300
+      00006E E5               [16]  155 	push	hl
+      00006F CDr00r00         [24]  156 	call	_set_sprite_data
+      000072 E8 04            [16]  157 	add	sp, #4
+                                    158 ;c:\users\alive\desktop\gbdk\include\gb\gb.h:1804: shadow_OAM[nb].tile=tile;
+      000074 21r02r00         [12]  159 	ld	hl, #(_shadow_OAM + 2)
+      000077 36 01            [12]  160 	ld	(hl), #0x01
+                                    161 ;main.c:48: playerLocation[0] = 80;
+      000079 21r00r00         [12]  162 	ld	hl, #_playerLocation
+      00007C 36 50            [12]  163 	ld	(hl), #0x50
+                                    164 ;main.c:49: playerLocation[1] = 80;
+      00007E 21r01r00         [12]  165 	ld	hl, #(_playerLocation + 1)
+      000081 36 50            [12]  166 	ld	(hl), #0x50
+                                    167 ;main.c:54: SHOW_BKG;
+      000083 F0r00            [12]  168 	ldh	a, (_LCDC_REG + 0)
+      000085 F6 01            [ 8]  169 	or	a, #0x01
+      000087 E0r00            [12]  170 	ldh	(_LCDC_REG + 0), a
+                                    171 ;main.c:55: SHOW_SPRITES;
+      000089 F0r00            [12]  172 	ldh	a, (_LCDC_REG + 0)
+      00008B F6 02            [ 8]  173 	or	a, #0x02
+      00008D E0r00            [12]  174 	ldh	(_LCDC_REG + 0), a
+                                    175 ;main.c:56: DISPLAY_ON;
+      00008F F0r00            [12]  176 	ldh	a, (_LCDC_REG + 0)
+      000091 F6 80            [ 8]  177 	or	a, #0x80
+      000093 E0r00            [12]  178 	ldh	(_LCDC_REG + 0), a
+                                    179 ;main.c:58: while(loopRunning){
+      000095                        180 00101$:
+      000095 21r00r00         [12]  181 	ld	hl, #_loopRunning
+      000098 CB 46            [12]  182 	bit	0, (hl)
+      00009A C8               [20]  183 	ret	Z
+                                    184 ;main.c:59: getPlayerInput();
+      00009B CDr0Cr00         [24]  185 	call	_getPlayerInput
+                                    186 ;main.c:61: }
+      00009E 18 F5            [12]  187 	jr	00101$
+                                    188 	.area _CODE
+                                    189 	.area _INITIALIZER
+      000000                        190 __xinit__loopRunning:
+      000000 01                     191 	.db #0x01	;  1
+                                    192 	.area _CABS (ABS)
