@@ -4,7 +4,7 @@
             "name": "Win32",
             "includePath": [
                 "${workspaceFolder}/**",
-                "C:/Users/alive/Desktop/gbdk-2020-develop/gbdk-lib/include/**"
+                "C:/Users/alive/Desktop/gbdk/include/**"
             ],
             "defines": [
                 "_DEBUG",
