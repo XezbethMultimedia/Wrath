@@ -786,10 +786,10 @@
       0002D9 F5               [16]  786 	push	af
       0002DA CDr00r00         [24]  787 	call	_set_bkg_tiles
       0002DD E8 06            [16]  788 	add	sp, #6
-                                    789 ;main.c:44: set_sprite_data(0, 3, SpriteSheet);
+                                    789 ;main.c:44: set_sprite_data(0, 4, SpriteSheet);
       0002DF 11rDCr00         [12]  790 	ld	de, #_SpriteSheet
       0002E2 D5               [16]  791 	push	de
-      0002E3 21 00 03         [12]  792 	ld	hl, #0x300
+      0002E3 21 00 04         [12]  792 	ld	hl, #0x400
       0002E6 E5               [16]  793 	push	hl
       0002E7 CDr00r00         [24]  794 	call	_set_sprite_data
       0002EA E8 04            [16]  795 	add	sp, #4

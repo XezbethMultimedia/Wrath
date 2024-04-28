@@ -41,7 +41,7 @@ void main(void){
     set_bkg_data(0, 16, BGSheet);
     set_bkg_tiles(0, 0, 20, 18, HubMap);
 
-    set_sprite_data(0, 3, SpriteSheet);
+    set_sprite_data(0, 4, SpriteSheet);
     set_sprite_tile(0, 1);
 
     //set player position

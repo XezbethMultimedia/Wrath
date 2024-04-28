@@ -786,10 +786,10 @@ _main::
 	push	af
 	call	_set_bkg_tiles
 	add	sp, #6
-;main.c:44: set_sprite_data(0, 3, SpriteSheet);
+;main.c:44: set_sprite_data(0, 4, SpriteSheet);
 	ld	de, #_SpriteSheet
 	push	de
-	ld	hl, #0x300
+	ld	hl, #0x400
 	push	hl
 	call	_set_sprite_data
 	add	sp, #4
